@@ -1,0 +1,20 @@
+{
+  "name": "km25.se",
+  "private": true,
+  "type": "module",
+  "version": "0.0.1",
+  "author": "Carl-David Granbäck <calle@km25.se> (https://www.km25.se)",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro build && astro preview"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.5.10",
+    "@astrojs/tailwind": "^5.1.0",
+    "astro": "^4.5.9",
+    "swiper": "^11.1.4",
+    "tailwindcss": "^3.4.1",
+    "typescript": "5.3.3"
+  }
+}

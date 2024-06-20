@@ -1,0 +1,101 @@
+---
+import IconSun from './icons/IconSun.astro';
+import IconMoon from './icons/IconMoon.astro';
+---
+
+<a
+  data-toggle-dark-mode
+  href="#"
+  class="hidden hover:scale-125 duration-100 mr-3"
+  title="Toggle dark mode"
+>
+  <IconSun class="toggle-dark-mode text-black" />
+</a>
+<a
+  data-toggle-light-mode
+  href="#"
+  class="hidden hover:scale-125 duration-100 mr-3"
+  title="Toggle light mode"
+>
+  <IconMoon class="toggle-light-mode text-white" />
+</a>
+
+<script>
+  let isDarkMode =
+    localStorage.theme === 'dark' ||
+    (!('theme' in localStorage) &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches);
+
+  const toggleDarkMode = document.querySelector('[data-toggle-dark-mode]');
+  const toggleLightMode = document.querySelector('[data-toggle-light-mode]');
+
+  toggleDarkMode?.classList.toggle('hidden', isDarkMode);
+  toggleLightMode?.classList.toggle('hidden', !isDarkMode);
+
+  const updateDOM = (animates: boolean) => {
+    isDarkMode = !isDarkMode;
+    localStorage.theme = isDarkMode ? 'dark' : 'light';
+    document.documentElement.classList.toggle('dark');
+
+    if (animates) {
+      document.documentElement.classList.add('dark-toggling');
+    } else {
+      toggleDarkMode?.classList.toggle('hidden', isDarkMode);
+      toggleLightMode?.classList.toggle('hidden', !isDarkMode);
+    }
+  };
+
+  const toggle = (e: MouseEvent | null) => {
+    e?.preventDefault();
+
+    const shouldAnimate =
+      document.startViewTransition &&
+      !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (!shouldAnimate || !e) {
+      updateDOM(false);
+      return;
+    }
+
+    const x = e?.clientX ?? 0;
+    const y = e?.clientY ?? 0;
+
+    const endRadius = Math.hypot(
+      Math.max(x, innerWidth - x),
+      Math.max(y, innerHeight - y)
+    );
+
+    const transition = document.startViewTransition(() => {
+      updateDOM(true);
+    });
+
+    transition.ready.then(() => {
+      const clipPath = [
+        `circle(0 at ${x}px ${y}px)`,
+        `circle(${endRadius}px at ${x}px ${y}px)`,
+      ];
+
+      document.documentElement.animate(
+        {
+          clipPath: isDarkMode ? [...clipPath].reverse() : clipPath,
+        },
+        {
+          duration: 400,
+          easing: 'ease-in',
+          pseudoElement: isDarkMode
+            ? '::view-transition-old(root)'
+            : '::view-transition-new(root)',
+        }
+      );
+    });
+
+    transition.finished.then(() => {
+      toggleDarkMode?.classList.toggle('hidden', isDarkMode);
+      toggleLightMode?.classList.toggle('hidden', !isDarkMode);
+      document.documentElement.classList.remove('dark-toggling');
+    });
+  };
+
+  toggleDarkMode?.addEventListener('click', (e) => toggle(e as MouseEvent));
+  toggleLightMode?.addEventListener('click', (e) => toggle(e as MouseEvent));
+</script>

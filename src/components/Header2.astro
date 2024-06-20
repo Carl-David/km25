@@ -1,0 +1,236 @@
+---
+import IconPin from './icons/IconPin.astro';
+import { getImage } from 'astro:assets';
+import altiplanoBolivia from '../assets/heros/altiplano-bolivia.jpg';
+import salarDeUyuniBolivia from '../assets/heros/salar-de-uyuni-bolivia.jpg';
+import highAtlasMountainsMorocco from '../assets/heros/high-atlas-mountains-morocco.jpg';
+import centralAfricanRepublic from '../assets/heros/central-african-republic.jpg';
+import saharaDesertMauritania from '../assets/heros/sahara-desert-mauritania.jpg';
+import marienflussValleyNamibia from '../assets/heros/marienfluss-valley-namibia.jpg';
+import type { GetImageResult, ImageMetadata } from 'astro';
+import Icon from './Icon.astro';
+
+type Hero = {
+  title: string;
+  image: GetImageResult;
+  coordinates: number[];
+  position?: string;
+  loaded?: boolean;
+  overlayOpacity?: number;
+};
+
+const getOptimizedImage = (image: ImageMetadata) =>
+  getImage({
+    src: image,
+    format: 'webp',
+    quality: 'high',
+    widths: [1024, 1280, 1600, image.width],
+  });
+
+let heros: Hero[] = [
+  {
+    title: 'Altiplano, Bolivia. 4,523 masl.',
+    image: await getOptimizedImage(altiplanoBolivia),
+    coordinates: [-22.11374, -67.65743],
+    position: '50% 54%',
+  },
+  {
+    title: 'High Atlas Mountains, Morocco',
+    image: await getOptimizedImage(highAtlasMountainsMorocco),
+    coordinates: [31.74369, -5.68674],
+    position: '50% 56%',
+  },
+  {
+    title: 'The Sahara Desert, Mauritania',
+    image: await getOptimizedImage(saharaDesertMauritania),
+    coordinates: [21.06086, -16.33756],
+    position: '50% 53%',
+  },
+  {
+    title: 'Central African Republic (CAR)',
+    image: await getOptimizedImage(centralAfricanRepublic),
+    coordinates: [2.78624, 16.20015],
+    position: '50% 41%',
+    overlayOpacity: 0.4,
+  },
+  {
+    title: 'Salt Desert of Uyuni, Bolivia',
+    image: await getOptimizedImage(salarDeUyuniBolivia),
+    coordinates: [-20.34615, -67.58564],
+    position: '50% 67%',
+  },
+  {
+    title: 'Marienfluss Valley, Namibia',
+    image: await getOptimizedImage(marienflussValleyNamibia),
+    coordinates: [-17.67668, 12.64643],
+    position: '50% 48%',
+  },
+];
+---
+
+<header class="relative w-full basis-[50vh] min-h-[300px] shrink-0 grow-0">
+  <div class="w-full h-full overflow-hidden">
+    <div
+      class="hero w-full h-full bg-gray-100 dark:bg-gray-700 bg-cover bg-center"
+    >
+      <div
+        class="hero-skeleton bg-[#f3f3f3] dark:bg-gray-700 bg-gradient-to-l from-[#f3f3f3] from-0% via-[#fafafa] via-20% to-[#f3f3f3] to-40% dark:from-gray-700 dark:via-[#313646] dark:to-gray-700 w-full h-full hidden bg-no-repeat"
+      >
+      </div>
+    </div>
+    <a
+      href="#"
+      title="Show next photo"
+      class="hero-next absolute bottom-4 lg:top-3 right-3 h-8 w-8 items-center justify-center group hidden hover:scale-125 duration-100"
+    >
+      <Icon
+        type="Camera"
+        showName={false}
+        width="32"
+        height="32"
+        title="Show next photo"
+      />
+    </a>
+    <div
+      class={`hero-location absolute max-lg:top-0 lg:bottom-0 right-0 m-2 md:m-3 p-1 bg-black/${heros[0].overlayOpacity ? heros[0].overlayOpacity * 100 : 15} text-xs sm:text-sm font-mono text-gray-200 md:text-white hidden`}
+    >
+      <IconPin class="inline-block mb-1" title="Location" />
+      <a
+        id="hero-location-link"
+        href={`https://www.google.com/maps?t=k&q=${heros[0].coordinates.join(',')}`}
+        class="text-inherit font-normal no-underline"
+        title="Show location on the map"
+      >
+        <span id="hero-coordinates" class="hover:underline"
+          >LAT {heros[0].coordinates[0]}, LON {heros[0].coordinates[1]}</span
+        ></a
+      ><br />
+      <span id="hero-title" set:html={heros[0].title} />
+    </div>
+  </div>
+</header>
+
+<style>
+  @supports (height: 50svh) {
+    header {
+      flex-basis: 50svh;
+    }
+  }
+
+  .hero {
+    animation: 60s linear hero-zoom infinite;
+  }
+
+  .hero-skeleton {
+    animation: 1s linear hero-skeleton-loading infinite;
+  }
+
+  @keyframes hero-skeleton-loading {
+    0% {
+      transform: translateX(-200%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  @keyframes hero-zoom {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.2);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+</style>
+
+<script is:inline define:vars={{ heros }}>
+  const hero = document.querySelector('.hero');
+  const location = document.querySelector('.hero-location');
+  const skeleton = document.querySelector('.hero-skeleton');
+  const nextHero = document.querySelector('.hero-next');
+  let currentIndex = -1;
+
+  const getImageSrc = (hero) => {
+    const resolution = window.screen.width * window.devicePixelRatio;
+
+    if (resolution < 1280) {
+      return hero.image.srcSet.values[0].url;
+    } else if (resolution < 1600) {
+      return hero.image.srcSet.values[1].url;
+    } else if (resolution < 1920) {
+      return hero.image.srcSet.values[2].url;
+    }
+    return hero.image.src;
+  };
+
+  const loadHero = (direction) => {
+    if (direction === 1) {
+      currentIndex = (currentIndex + 1) % heros.length;
+    } else {
+      currentIndex = (currentIndex - 1 + heros.length) % heros.length;
+    }
+
+    if (!heros[currentIndex].loaded) {
+      skeleton.classList.remove('hidden');
+    }
+
+    location.classList.add('hidden');
+    nextHero.classList.add('hidden');
+    nextHero.classList.remove('flex');
+    hero.classList.remove('hero');
+    // Reset animation
+    void hero.offsetWidth;
+    hero.classList.add('hero');
+    hero.style.backgroundImage = 'none';
+    const currentHero = heros[currentIndex];
+
+    const image = new Image();
+
+    image.onload = () => {
+      heros[currentIndex].loaded = true;
+      skeleton.classList.add('hidden');
+      location.classList.remove('hidden');
+      nextHero.classList.remove('hidden');
+      nextHero.classList.add('flex');
+      hero.style.backgroundImage = `url(${image.src})`;
+      hero.style.backgroundPosition = currentHero.position ?? 'center';
+      location.style.backgroundColor = `rgba(0, 0, 0, ${currentHero.overlayOpacity ?? 0.15})`;
+
+      document.querySelector('#hero-title').innerHTML = currentHero.title;
+      document.querySelector('#hero-coordinates').innerHTML =
+        `LAT ${currentHero.coordinates[0]}, LON ${currentHero.coordinates[1]}`;
+      document.querySelector('#hero-location-link').href =
+        `https://www.google.com/maps?t=k&q=${currentHero.coordinates.join(',')}`;
+
+      if (!heros[currentIndex].loaded) {
+        const nextIndex = (currentIndex + 1) % heros.length;
+        const nextImage = new Image();
+        nextImage.onload = () => {
+          heros[nextIndex].loaded = true;
+        };
+
+        nextImage.src = getImageSrc(heros[nextIndex]);
+      }
+    };
+
+    image.src = getImageSrc(currentHero);
+  };
+
+  nextHero.addEventListener('click', () => {
+    loadHero(1);
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') {
+      loadHero(-1);
+    } else if (e.key === 'ArrowRight') {
+      loadHero(1);
+    }
+  });
+
+  loadHero(1);
+</script>

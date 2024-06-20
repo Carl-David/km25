@@ -1,0 +1,168 @@
+---
+import Icon, { type Props as IconProps } from './Icon.astro';
+import companies from '../data/timeline.json';
+
+export type Company = {
+  name: string;
+  url: string;
+  year: string;
+  tech?: IconProps[];
+  description?: string;
+  stickyName?: boolean;
+};
+
+const timelineStart = '2015';
+---
+
+<div class="relative mt-5 mx-auto sm:w-[600px] md:w-[90%]">
+  <div class="flex flex-col">
+    {
+      (companies as Company[]).map((company, index) => {
+        return (
+          <div class="relative dark:text-gray-300">
+            <div class="flex relative flex-row justify-center mx-auto my-5 ">
+              <div class="timeline-year">{company.year}</div>
+              <div
+                class="timeline timeline-horizontal absolute top-[18px] -z-10"
+                class:list={[
+                  {
+                    'w-1/2 left-0 sm:w-[130px] sm:left-[calc(50%-115px)] md:w-[163px] md:left-[calc(50%-135px)]':
+                      index === 0,
+                  },
+                  {
+                    'w-full sm:w-[228px] md:w-[270px]': index > 0,
+                  },
+                ]}
+              />
+            </div>
+            <div
+              class="flex relative flex-col sm:flex-row bg-gray-50 dark:bg-slate-700 p-5 pb-2 sm:p-6 sm:pb-3 md:p-7 md:pb-5 gap-4 sm:gap-10 md:gap-12 rounded-sm shadow-md"
+              class:list={[
+                { 'sm:flex-row mx-5 sm:mx-0': index % 2 === 0 },
+                { 'sm:flex-row-reverse mx-5 sm:mx-0': index % 2 === 1 },
+              ]}
+            >
+              <div class="flex justify-center items-center shrink-0">
+                <a href={company.url} class="w-[140px] icon-link">
+                  <img
+                    src={`/images/companies/${company.name.toLowerCase().replace(/( )/g, '-')}.svg`}
+                    loading="lazy"
+                    decoding="async"
+                    alt={company.name}
+                    class="mx-auto max-h-[75px]"
+                  />
+                </a>
+              </div>
+              <div
+                class="timeline absolute top-[-39px] h-[calc(100%+80px)] w-[3px]"
+                class:list={[
+                  {
+                    '-left-5 sm:left-[calc(50%-115px)] md:left-[calc(50%-135px)]':
+                      index % 2 === 0,
+                  },
+                  {
+                    '-right-5 sm:right-[calc(50%-115px)] md:right-[calc(50%-135px)]':
+                      index % 2 === 1,
+                  },
+                ]}
+              />
+              <div class="flex flex-col grow">
+                <h3
+                  class="text-lg mb-2 text-center sm:text-left"
+                  class:list={[
+                    { 'hidden sm:inline-block': !company.stickyName },
+                  ]}
+                >
+                  {company.name}
+                </h3>
+                <p
+                  class="text-gray-500 dark:text-gray-300 text-sm mb-5"
+                  set:html={company.description}
+                />
+                <div class="grid grid-cols-4 sm:grid-cols-5 text-gray-500 dark:text-gray-300">
+                  {company.tech?.map((tech) => {
+                    return (
+                      <Icon
+                        {...tech}
+                        classList={['min-w-16', 'min-h-16']}
+                        height="24"
+                      />
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+            {index === companies.length - 1 && (
+              <div class="flex relative flex-row justify-center mx-auto my-5">
+                <div class="timeline-year">{timelineStart}</div>
+                <div
+                  class="timeline timeline-horizontal absolute top-[18px] -z-10"
+                  class:list={[
+                    {
+                      'w-1/2 left-0 sm:w-[130px] sm:left-[calc(50%-115px)] md:w-[163px] md:left-[calc(50%-135px)]':
+                        index % 2 === 0,
+                    },
+                    {
+                      'w-1/2 right-0 sm:w-[130px] sm:right-[calc(50%-115px)] md:w-[163px] md:right-[calc(50%-135px)]':
+                        index % 2 === 1,
+                    },
+                  ]}
+                />
+                <div
+                  class="timeline-horizontal absolute top-[18px] -z-10 from-cyan-100"
+                  class:list={[
+                    {
+                      'w-1/2 right-12 sm:w-[130px] sm:right-[calc(50%-140px)] md:w-[163px] md:right-[calc(50%-170px)] bg-gradient-to-r':
+                        index % 2 === 0,
+                    },
+                    {
+                      'w-1/2 left-12 sm:w-[130px] sm:left-[calc(50%-140px)] md:w-[163px] md:left-[calc(50%-170px)] bg-gradient-to-l':
+                        index % 2 === 1,
+                    },
+                  ]}
+                />
+              </div>
+            )}
+          </div>
+        );
+      })
+    }
+  </div>
+</div>
+
+<style>
+  @tailwind utilities;
+
+  @layer utilities {
+    .timeline {
+      @apply bg-cyan-100;
+    }
+
+    .timeline-year {
+      @apply border-[3px] w-[140px] border-cyan-100 bg-cyan-100 text-cyan-700 rounded-full text-center py-1 dark:dark:text-sky-800;
+      transition: transform 0.5s ease;
+      transition-delay: 0.2s;
+      scale: 0.75;
+    }
+
+    .timeline-horizontal {
+      @apply h-[3px];
+    }
+  }
+</style>
+
+<script>
+  const timelineYears = document.querySelectorAll('.timeline-year');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target?.classList.add('scale-125');
+      }
+    });
+  });
+
+  timelineYears.forEach((year) => {
+    observer.observe(year);
+  });
+</script>

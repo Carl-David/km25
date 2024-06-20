@@ -1,0 +1,123 @@
+[
+    {
+        "name": "Volvo Cars",
+        "url": "https://www.volvocars.com",
+        "year": "Today",
+        "tech": [
+            {
+                "type": "Next.js"
+            },
+            {
+                "type": "React"
+            },
+            {
+                "type": "Node.js"
+            },
+            {
+                "type": "GraphQL"
+            },
+            {
+                "type": ".NET"
+            },
+            {
+                "type": "Jest"
+            },
+            {
+                "type": "MongoDB"
+            },
+            {
+                "type": "Kubernetes"
+            },
+            {
+                "type": "Elastic"
+            },
+            {
+                "type": "Storybook"
+            },
+            {
+                "type": "Percy"
+            },
+            {
+                "type": "Figma"
+            },
+            {
+                "type": "AWS<br/>Lambda"
+            },
+            {
+                "type": "GitHub<br/>Actions"
+            },
+            {
+                "type": "Launch<br/>Darkly"
+            }
+        ],
+        "description": "Working in two different projects, the <a href=\"https://www.volvocars.com/uk/build\">Car Configurator</a> and the <a href=\"https://www.volvocars.com/uk/business\">Fleet Portal</a>.",
+        "stickyName": true
+    },
+    {
+        "name": "Saab",
+        "url": "https://www.saab.com",
+        "year": "2020",
+        "description": "Full-Stack development within Surveillance (Public Safety & Security). Unfortunately I cannot disclose any details."
+    },
+    {
+        "name": "Telia Company",
+        "url": "https://www.teliacompany.com",
+        "year": "2018",
+        "tech": [
+            {
+                "type": "TypeScript"
+            },
+            {
+                "type": "Angular"
+            },
+            {
+                "type": "Redux"
+            },
+            {
+                "type": "Java"
+            },
+            {
+                "type": "Docker"
+            }
+        ],
+        "description": "Building customer portals for both Arelion (formerly Telia Carrier) and Telia Wholesale (formerly Skanova)."
+    },
+    {
+        "name": "Qualisys",
+        "url": "https://www.qualisys.com",
+        "year": "2016",
+        "tech": [
+            {
+                "type": "TypeScript"
+            },
+            {
+                "type": "AngularJS"
+            },
+            {
+                "type": "PHP"
+            },
+            {
+                "type": "Node.js"
+            },
+            {
+                "type": "Three.js"
+            },
+            {
+                "type": "MongoDB"
+            },
+            {
+                "type": "MySQL"
+            },
+            {
+                "type": "Gulp"
+            },
+            {
+                "type": "AWS"
+            },
+            {
+                "type": "Heroku"
+            }
+        ],
+        "description": "Developing analysis modules and booking systems for motion capture in the sciences of running, gait and equine."
+    }
+]

@@ -1,0 +1,44 @@
+---
+import IconDown from './icons/IconDown.astro';
+import IconUp from './icons/IconUp.astro';
+
+const { expanded } = Astro.props;
+---
+
+<section>
+  <slot />
+  <p>
+    <a data-expand href="#" class="my-2">Read more<IconDown class="inline" /></a
+    >
+    <a data-collapse href="#" class="hidden my-2"
+      >Read less<IconUp class="inline" /></a
+    >
+  </p>
+  <div
+    data-expandable
+    class="mt-2 ml-2 pl-4 border-l-[1px] border-l-gray-200 dark:border-l-gray-500 border-dashed"
+    class:list={[{ hidden: !expanded }]}
+  >
+    <slot name="expanded" />
+  </div>
+</section>
+
+<script>
+  const expand = document.querySelector('[data-expand]');
+  const collapse = document.querySelector('[data-collapse]');
+  const expandableContent = document.querySelector('[data-expandable]');
+
+  expand?.addEventListener('click', (e) => {
+    e.preventDefault();
+    expandableContent?.classList.remove('hidden');
+    expand?.classList.add('hidden');
+    collapse?.classList.remove('hidden');
+  });
+
+  collapse?.addEventListener('click', (e) => {
+    e.preventDefault();
+    expandableContent?.classList.add('hidden');
+    expand?.classList.remove('hidden');
+    collapse?.classList.add('hidden');
+  });
+</script>

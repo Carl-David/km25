@@ -1,0 +1,87 @@
+---
+import DarkModeToggle from '../DarkModeToggle.astro';
+import LogoSvg from './LogoSvg.astro';
+---
+
+<div
+  class="logo-wrapper sticky z-20 top-[calc(1px*var(--logoCenterLineOffsetMobile)+1px*var(--logoScrollAnchorOffsetMobile))] sm:top-[calc(1px*var(--logoCenterLineOffset)+1px*var(--logoScrollAnchorOffset))]"
+>
+  <div
+    class="logo-inner absolute top-[-64px] sm:top-[-80px] w-[calc(1px*var(--logoWidthMobile))] sm:w-[calc(1px*var(--logoWidth))] left-[calc(50%-1px*var(--logoWidthMobile)/2)] sm:left-[calc(50%-1px*var(--logoWidth)/2)] origin-[center_calc(1px*var(--logoCenterLineOffsetMobile))] sm:origin-[center_calc(1px*var(--logoCenterLineOffset))] transition duration-200 ease-in-out"
+  >
+    <LogoSvg
+      class="logo cursor-pointer transition duration-1000 ease-in-out scale-y-[0]"
+      aria-label="Flip logo"
+      title="Click to flip or look in the mirror"
+    />
+  </div>
+  <div class="logo-footer w-full mx-auto bg-white dark:bg-gray-800"></div>
+</div>
+
+<div class="logo-void-filler sticky top-0 w-full mx-auto z-10">
+  <div
+    class="flex items-center justify-end bg-white dark:bg-gray-800 select-none h-[calc(1px*var(--logoCenterLineOffsetMobile)+1px*var(--logoScrollAnchorOffsetMobile))] sm:h-[calc(1px*var(--logoCenterLineOffset)+1px*var(--logoScrollAnchorOffset))]"
+  >
+    <DarkModeToggle />
+  </div>
+</div>
+
+<style>
+  @tailwind utilities;
+
+  @layer utilities {
+    .mirrored {
+      @apply -scale-y-100;
+    }
+
+    .minimized {
+      @apply scale-[0.30] sm:scale-[0.25];
+    }
+
+    .bordered {
+      @apply border-b border-gray-200 dark:border-gray-600;
+    }
+  }
+</style>
+
+<script is:inline>
+  const logo = document.querySelector('.logo');
+  const logoInner = document.querySelector('.logo-inner');
+  const logoFooter = document.querySelector('.logo-footer');
+  const hero = document.querySelector('.swiper');
+
+  // TODO: Fix minimized delay
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      logoInner?.classList.toggle('minimized', !entry.isIntersecting);
+      logoFooter?.classList.toggle('bordered', !entry.isIntersecting);
+
+      if (!entry.isIntersecting) {
+        logo?.classList.remove('mirrored');
+      }
+    },
+    { delay: 0 }
+  );
+
+  if (hero) {
+    observer.observe(hero);
+  }
+
+  logo?.addEventListener('click', () => {
+    logo?.classList.toggle('mirrored');
+  });
+
+  logo?.addEventListener('mouseleave', () => {
+    logo?.classList.remove('mirrored');
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      logo?.classList.remove('mirrored');
+    }
+  });
+
+  setTimeout(() => {
+    logo?.classList.remove('scale-y-[0]');
+  }, 50);
+</script>

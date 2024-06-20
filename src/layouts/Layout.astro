@@ -1,0 +1,120 @@
+---
+import Header from '../components/Header.astro';
+import Logo from '../components/Logo/Logo.astro';
+import Footer from '../components/Footer.astro';
+// TODO: Search for // and <!-- and /*
+// TODO: Run external spell check
+// TODO: Update dependencies
+// Need astro-compress?
+/* from astro.config.mjs:
+import compress from "astro-compress";
+compress({
+    SVG: false,
+  })
+    */
+// TODO:  Check console
+// TODO:  Check lighthouse in prod build
+// TODO: Check other browsers (especially with Swiper if used)
+---
+
+<!doctype html>
+<html lang="en" class="h-full">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="description"
+      content="Senior Software Engineer doing Front-End/Full-Stack/UX"
+    />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="theme-color" content="#f3f3f3" />
+
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.json" />
+
+    <title>KM25</title>
+
+    <script>
+      const triggerDarkMode =
+        localStorage.theme === 'dark' ||
+        (!('theme' in localStorage) &&
+          window.matchMedia('(prefers-color-scheme: dark)').matches);
+
+      document.documentElement.classList.toggle('dark', triggerDarkMode);
+    </script>
+  </head>
+  <body class="flex flex-col dark:bg-gray-800 dark:text-gray-300">
+    <Header />
+    <Logo />
+    <slot />
+    <Footer />
+
+    <style is:global>
+      :root {
+        --logoWidth: 300;
+        --logoWidthMobile: 240;
+        --logoCenterLineOffset: 39;
+        --logoCenterLineOffsetMobile: 21;
+        --logoScrollAnchorOffset: 24;
+        --logoScrollAnchorOffsetMobile: 42;
+      }
+
+      ::view-transition-old(root),
+      ::view-transition-new(root) {
+        animation: none;
+        mix-blend-mode: normal;
+      }
+      ::view-transition-old(root),
+      .dark::view-transition-new(root) {
+        z-index: 1;
+      }
+      ::view-transition-new(root),
+      .dark::view-transition-old(root) {
+        z-index: 100;
+      }
+
+      @tailwind base;
+
+      @layer base {
+        h1 {
+          @apply text-2xl mb-4;
+        }
+
+        h2 {
+          @apply text-2xl mb-4;
+        }
+
+        h3 {
+          @apply text-xl mb-4 font-bold;
+        }
+
+        a {
+          @apply text-primary underline;
+        }
+
+        a:not(.icon-link),
+        a.icon-link > span {
+          @apply dark:brightness-200;
+          @apply hover:brightness-150;
+        }
+
+        p {
+          @apply mb-5;
+        }
+
+        body {
+          @apply font-sans;
+        }
+
+        section {
+          @apply leading-7;
+        }
+
+        .dark-toggling .toggle-light-mode {
+          @apply text-black scale-125;
+        }
+      }
+    </style>
+  </body>
+</html>

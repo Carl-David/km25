@@ -1,0 +1,75 @@
+---
+import { getImage } from 'astro:assets';
+import avatar from '../assets/avatar/avatar.jpg';
+import avatarSmall from '../assets/avatar/avatar-small.jpg';
+
+const avatarImage = await getImage({
+  src: avatar,
+  format: 'webp',
+  quality: 'high',
+});
+
+const avatarSmallImage = await getImage({
+  src: avatarSmall,
+  format: 'webp',
+  quality: 'high',
+});
+
+const zoomScale = 2.5;
+const name = 'Carl-David Granbäck';
+---
+
+<div class="ml-0 lg:-ml-[70px] flex lg:block justify-center mb-4">
+  <img
+    src={avatarSmallImage.src}
+    width="140"
+    height="140"
+    class="avatar lg:float-left rounded-full cursor-pointer dark:border-gray-500 transition ease-in-out duration-100 p-[11px] bg-[radial-gradient(#fff_65%,transparent_70%)] dark:bg-[radial-gradient(rgb(31,41,55)_65%,transparent_70%)]"
+    alt={name}
+    title={name}
+  />
+</div>
+
+<style define:vars={{ zoomScale }}>
+  .avatar {
+    shape-outside: circle();
+  }
+  .avatar-zoom {
+    transform: scale(var(--zoomScale));
+  }
+</style>
+
+<script is:inline define:vars={{ avatarImage }}>
+  const avatar = document.querySelector('.avatar');
+
+  const zoomAvatar = () => {
+    if (!avatar.classList.contains('avatar-zoom')) {
+      avatar.src = avatarImage.src;
+    }
+    avatar.classList.toggle('avatar-zoom');
+  };
+
+  avatar.addEventListener('click', () => {
+    zoomAvatar();
+  });
+
+  avatar.addEventListener('mouseout', () => {
+    avatar.classList.remove('avatar-zoom');
+  });
+
+  document.addEventListener('scroll', () => {
+    avatar.classList.remove('avatar-zoom');
+  });
+
+  document.addEventListener('click', (event) => {
+    if (event.target !== avatar) {
+      avatar.classList.remove('avatar-zoom');
+    }
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      avatar.classList.remove('avatar-zoom');
+    }
+  });
+</script>

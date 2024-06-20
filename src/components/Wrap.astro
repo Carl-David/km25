@@ -1,0 +1,18 @@
+---
+export interface Props {
+  shouldWrap: boolean;
+  as: keyof HTMLElementTagNameMap;
+}
+
+const { shouldWrap, as: As, ...attrs } = Astro.props;
+---
+
+{
+  !!shouldWrap ? (
+    <As {...attrs}>
+      <slot />
+    </As>
+  ) : (
+    <slot />
+  )
+}

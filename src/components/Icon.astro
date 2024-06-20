@@ -1,0 +1,58 @@
+---
+import { type Icon } from '../types';
+import Wrap from './Wrap.astro';
+
+export interface Props {
+  type: Icon;
+  title?: string;
+  url?: string;
+  showName?: boolean;
+  classList?: string[];
+  width?: string;
+  height?: string;
+  style?: string;
+}
+
+const {
+  type,
+  title = '',
+  url = '',
+  showName = true,
+  classList = [],
+  width,
+  height,
+  ...rest
+} = Astro.props;
+
+const src = `/images/icons/${type.toLowerCase().replace(/( )|(<br ?\/?>)/g, '-')}.svg`;
+---
+
+<div
+  class="flex flex-col items-center text-center text-xs gap-1"
+  class:list={classList}
+  {...rest}
+>
+  <Wrap
+    shouldWrap={!!url}
+    as="a"
+    href={url}
+    aria-label={type}
+    class="icon-link group flex flex-col items-center gap-1"
+  >
+    <img
+      src={src}
+      loading="lazy"
+      decoding="async"
+      alt={title ?? type}
+      class:list={[
+        {
+          'group-hover:scale-125 duration-100': !!url,
+        },
+      ]}
+      title={title}
+      width={width}
+      height={height}
+    />
+    {showName && <span set:html={type} />}
+  </Wrap>
+</div>

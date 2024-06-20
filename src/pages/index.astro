@@ -1,0 +1,190 @@
+---
+import Avatar from '../components/Avatar.astro';
+import Axiom from '../components/Axiom.astro';
+import ContentToggle from '../components/ContentToggle.astro';
+import Layout from '../layouts/Layout.astro';
+import Timeline from '../components/Timeline.astro';
+import BikeDivider from '../components/BikeDivider.astro';
+---
+
+<Layout>
+  <main class="w-full md:w-[765px] mx-auto my-0 px-4 mt-16 sm:mt-20">
+    <h1 class="font-serif text-center mb-8 italic">
+      <span>Senior Software Engineer</span>
+      <span class="text-slate-500 dark:text-slate-500">doing</span>
+      <span
+        >Front-End<span class="text-slate-500 dark:text-slate-500">/</span><span
+          >Full-Stack</span
+        ><span class="text-slate-500 dark:text-slate-500">/</span><span>UX</span
+        ></span
+      >
+    </h1>
+
+    <Avatar />
+
+    <p>
+      Hi! My name is Carl-David Granbäck, an adventurous software engineer with
+      experience from both consulting-, product organizations and startups. Fell
+      in love with code in the late 90s, and with people since day one.
+    </p>
+
+    <p>
+      Positive, meticulous and adaptive. Big sense of commitment and an eye for
+      details, whether it's code, content or design. Responsible and pragmatic
+      approach to the profession and a tech-agnostic mindset. Likes trying out
+      new stuff and creating meaningful software with snappy UIs.
+    </p>
+
+    <p>
+      A good listener with social skills that thrives in global multi-cultural
+      teams. Five years of international experience from studies and consulting
+      work in Asia, and three years of <a href="https://www.swedentoafrica.com"
+        >bicycle touring</a
+      > to remote corners of the planet. Crossed three continents and pedaled over
+      40,000 kilometers with many lessons learned along the way.
+    </p>
+
+    <p>
+      Holds an M.Sc. in Software Engineering from Chalmers University of
+      Technology in Sweden and Nanyang Technological University in Singapore.
+    </p>
+
+    <p>
+      Lives with my partner and two sons on an old 40 acre farm, enabling a
+      lifestyle close to nature and a wide range of creative hobbies. <a
+        href="https://www.google.com/maps?t=k&q=58.51579,11.31098"
+        title="Show my office on the map">Located</a
+      > on the West Coast of Sweden, between Gothenburg and Oslo.
+    </p>
+
+    <h2>Company & Mindset</h2>
+
+    <ContentToggle>
+      <p>
+        <em>KM25</em> is a remote locality situated on the coast of Western Sahara.
+        It's a kitesurfing spot in a lagoon surrounded by the desert. It's named
+        after being located 25 kms from the closest town, and it has a special meaning
+        to me.
+      </p>
+      <p>
+        But KM25 could also be elsewhere. An imaginary place 25 kms from
+        anything. I like the abstractness of this name, along with some symbolic
+        properties, so that's what I decided to call my company.
+      </p>
+
+      <Fragment slot="expanded">
+        <p>
+          Between 2013-2015, I spent two years <a
+            href="https://www.swedentoafrica.com">cycling</a
+          > from Sweden all the way down to South Africa. I passed KM25 on my way
+          south and ended up staying there for a long time, and the place came to
+          mean a lot to me. As I put it in my diary: <q
+            ><em
+              >There's really nothing here, and at same time there is so much</em
+            ></q
+          >. It was the kind of place that made you stop and notice the small
+          things in life.
+        </p>
+
+        <p>
+          <strong>25 kms</strong> is a distance that is doable in an hour on a bike,
+          or in a day by foot. Multiply that by 4 and you get <strong
+            >100 kms</strong
+          >, easily rideable in one day. Multiply <em>that</em> by 4 and you will
+          reach <strong>400 kms</strong>.
+        </p>
+
+        <p>That is enough to cross many countries in Europe!</p>
+
+        <p>
+          The act of <em>repeating</em>, or doing things in iterations, is
+          something that is very powerful. This has always been a kind of mantra
+          to me when I want to achieve something. Whether I'm digging a deep
+          hole prospecting for gold, or crossing continents with my own legs.
+        </p>
+
+        <p>
+          This also ties into software development. By repeating the process,
+          and adapting it as you go, you will reach the next milestone and
+          eventually also your final goal. By splitting a problem into smaller
+          pieces and acting upon them, the problem will suddenly feel much more
+          doable.
+        </p>
+
+        <p>
+          The act of <em>finalizing</em> things is also something that I have always
+          enjoyed. Whether I do woodworking, write software, or embark on a new adventure.
+          By finalizing your current task, you feel the joy of having achieved what
+          you set out to do, and can better focus on what comes next.
+        </p>
+
+        <p>
+          To me, the cycling trip to South Africa became a very tangible way of
+          realizing these two acts.
+        </p>
+
+        <BikeDivider />
+
+        <p>
+          I like things to have a meaning, and the idea behind the name of the
+          company is that you can achieve great things by iterating and breaking
+          up a challenge into smaller parts. 25 kms is a nice and manageable
+          piece of distance when you cycle. Here, it's also a metaphor for the
+          iterative nature of software development.
+        </p>
+
+        <p>
+          The company logo was designed to be motivational. As a way of reaching
+          your goals and reflect on your achievements. You can get valuable
+          insights by looking in the rear-view mirror, whether you're on the
+          road or developing software. The same goes for the logo. If you look
+          at it in a mirror (or <a
+            data-flip-logo
+            href="#"
+            aria-label="Flip logo">click here</a
+          >), you can see that it transforms into <em>KW5<sup>2</sup></em> and this
+          made-up yet symbolic "axiom" then follows:
+        </p>
+
+        <!-- TODO: Check the logo in the mirror again -->
+
+        <Axiom />
+
+        <p>In other words:</p>
+
+        <p class="text-center italic">
+          The more empowered you are,<br />
+          the further you'll get!
+        </p>
+      </Fragment>
+    </ContentToggle>
+
+    <section>
+      <h2>Experience</h2>
+
+      <p>
+        This is a selection of recent companies and tech that I have worked
+        with. Check
+        <a href="https://www.linkedin.com/in/carldavid" aria-label="LinkedIn">
+          LinkedIn</a
+        > for more.
+      </p>
+    </section>
+
+    <Timeline />
+  </main>
+
+  <script is:inline>
+    const flipLogo = () => {
+      const logo = document.querySelector('.logo');
+      logo.classList.toggle('mirrored');
+    };
+
+    document
+      .querySelector('[data-flip-logo]')
+      .addEventListener('click', (e) => {
+        e.preventDefault();
+        flipLogo();
+      });
+  </script>
+</Layout>

@@ -1,0 +1,64 @@
+---
+import Icon, { type Props as IconProps } from './Icon.astro';
+
+const year = new Date().getFullYear();
+
+const poweredBy: IconProps[] = [
+  { type: 'Love' },
+  { type: 'Astro' },
+  { type: 'Tailwind' },
+  {
+    type: 'GitHub<br/>Pages',
+    url: 'https://github.com/carl-david/km25/blob/main/CNAME',
+  },
+];
+---
+
+<footer class="text-gray-500 dark:text-gray-400 text-center mt-20 pb-24">
+  <div class="flex flex-col md:flex-row justify-center gap-5 md:gap-10">
+    <div class="flex flex-col justify-center mb-5">
+      <p class="mb-4 md:ml-6">Contact me</p>
+      <div class="flex flex-row justify-center">
+        <div class="flex items-center mr-2">
+          <Icon
+            type="Google Maps"
+            url="https://www.google.com/maps?t=k&q=58.51579,11.31098"
+            showName={false}
+            title="Show my office on the map"
+            classList={['min-w-10']}
+          />
+          <Icon
+            type="LinkedIn"
+            url="https://www.linkedin.com/in/carldavid"
+            showName={false}
+            title="LinkedIn"
+            classList={['min-w-10']}
+          />
+        </div>
+        <div
+          class="text-left text-sm border-l-2 border-l-gray-100 dark:border-l-gray-500 pl-3"
+        >
+          E-mail: <a href="mailto:calle@km25.se">calle@km25.se</a><br />
+          Phone: <a href="tel:+46736216540">+46 736 21 65 40</a><br />
+        </div>
+      </div>
+    </div>
+    <div class="w-[2px] h-auto bg-gray-100 dark:bg-gray-500"></div>
+    <div class="flex flex-col justify-center md:mr-[4.5rem]">
+      <p class="mb-4">Powered by</p>
+
+      <div class="flex flex-row justify-center flex-wrap gap-3">
+        {
+          poweredBy.map((tech) => {
+            return <Icon {...tech} classList={['min-w-10', 'first:min-w-0']} />;
+          })
+        }
+      </div>
+    </div>
+  </div>
+
+  <p class="mt-10">
+    <span class="inline-block rotate-180" title="Copyleft ;-)">&copy;</span>
+    {year} KM25 AB
+  </p>
+</footer>

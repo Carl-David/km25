@@ -1,0 +1,139 @@
+---
+import Icon from '../components/Icon.astro';
+
+// TODO: 5 is not the amount outputted though, change logic in loop?
+const milestoneCount = 5;
+---
+
+<div class="flex flex-row justify-center gap-2">
+  <div
+    class="self-center text-gray-400 dark:text-gray-300 uppercase font-[Impact] mb-4"
+  >
+    <Icon type="Sweden" />
+  </div>
+  <div class="w-full my-12">
+    <div class="relative">
+      <div
+        data-bike
+        class="absolute top-[-27px] bg-white dark:bg-gray-800 confetti"
+      >
+        <Icon type="Bike" showName={false} />
+      </div>
+      {
+        [...Array(milestoneCount)].map(
+          (_, i) =>
+            i > 0 &&
+            i < milestoneCount && (
+              <div
+                data-milestone={(i * 100) / milestoneCount}
+                class="transition duration-500 opacity-0"
+              >
+                <Icon
+                  type="Flag"
+                  showName={false}
+                  classList={[`absolute top-[-15px]`]}
+                  style={`left: calc(${(i * 100) / milestoneCount}%)`}
+                />
+              </div>
+            )
+        )
+      }
+      <div
+        data-track
+        class="w-full border-b border-1 border-dashed border-stone-300"
+      >
+      </div>
+    </div>
+  </div>
+  <div
+    class="self-center text-gray-400 dark:text-gray-300 uppercase font-[Impact]"
+  >
+    <Icon type="South Africa" />
+  </div>
+</div>
+
+<script is:inline define:vars={{ milestoneCount }}>
+  const bike = document.querySelector('[data-bike]');
+  const track = document.querySelector('[data-track]');
+  const milestones = document.querySelectorAll('[data-milestone]');
+  let hasCelebrated = false;
+
+  document.addEventListener('scroll', () => {
+    // TODO: Split into more functions for readability, one handling bike, one handling confetti, one handling milestones etc
+    const scrollPosition =
+      1 - (track.getBoundingClientRect().y - 80) / (window.innerHeight - 120);
+    const bikePercentageWidth = (32 / bike.parentElement.offsetWidth) * 100;
+    const progress = Math.max(
+      Math.min(100 - bikePercentageWidth, scrollPosition * 100),
+      0
+    );
+    const isComplete = progress + bikePercentageWidth >= 100;
+    bike
+      .querySelector('img')
+      .setAttribute(
+        'title',
+        progress >= 100 - bikePercentageWidth
+          ? 'Done!'
+          : `Only ${Math.round(100 - progress)}% left!`
+      );
+    bike.style.left = `${progress}%`;
+
+    milestones.forEach((milestone) => {
+      const value = milestone.getAttribute('data-milestone');
+
+      if (value < progress + bikePercentageWidth) {
+        milestone.classList.add('opacity-0');
+      } else {
+        milestone.classList.remove('opacity-0');
+      }
+    });
+
+    if (isComplete && !hasCelebrated) {
+      const confetti = document.createDocumentFragment();
+
+      for (let i = 0; i < 50; i++) {
+        const fragment = document.createElement('span');
+
+        fragment.style.cssText =
+          'animation: confetti 800ms ease-out forwards;' +
+          'display: block;' +
+          'position: absolute;' +
+          'right: calc(50% - 3px);' +
+          'top: 50%;' +
+          'width: 3px;' +
+          'height: 8px;' +
+          'opacity: 0;' +
+          'z-index: 50;' +
+          'transform: translate3d(' +
+          (Math.random() * 300 - 150) +
+          'px, ' +
+          (Math.random() * 200 - 100) +
+          'px, 0) rotate(' +
+          Math.random() * 360 +
+          'deg); background: hsla(' +
+          Math.random() * 360 +
+          ',100%,50%,1);';
+
+        confetti.appendChild(fragment);
+      }
+
+      bike.append(confetti);
+      hasCelebrated = true;
+
+      setTimeout(() => {
+        bike.querySelectorAll('span').forEach((elem) => elem.remove());
+      }, 800);
+    } else if (!isComplete) {
+      hasCelebrated = false;
+    }
+  });
+</script>
+
+<style>
+  @keyframes confetti {
+    from {
+      transform: translate3d(0, 0, 0);
+      opacity: 1;
+    }
+  }
+</style>
