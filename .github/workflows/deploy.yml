@@ -16,7 +16,7 @@ jobs:
       - name: Install sharp
         shell: 'bash'
         working-directory: .
-        run: npm install sharp
+        run: npm install sharp -g
       - name: Install, build, and upload site
         uses: withastro/action@v2
   deploy:
