@@ -27,7 +27,7 @@ const getOptimizedImage = (image: ImageMetadata) =>
     widths: [1024, 1280, 1600, image.width],
   });
 
-let heros: Hero[] = [
+const heros: Hero[] = [
   {
     title: 'Altiplano, Bolivia. 4,523 masl.',
     image: await getOptimizedImage(altiplanoBolivia),

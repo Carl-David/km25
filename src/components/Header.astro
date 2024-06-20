@@ -18,7 +18,7 @@ type Hero = {
   loaded?: boolean;
 };
 
-let heros: Hero[] = [
+const heros: Hero[] = [
   {
     title: 'Altiplano, Bolivia. 4,523 masl.',
     image: altiplanoBolivia,
@@ -60,8 +60,8 @@ let heros: Hero[] = [
 
 <header class="relative w-full shrink-0 grow-0">
   <!-- TODO: Dark mode swiper preloader -->
-  <!-- swiper-preloader-color and the preloader div needed? check slow connection. Skeleton? -->
-  <!-- TODO: Loadiong, what about location and next links? -->
+  <!-- TODO: swiper-preloader-color and the preloader div needed? check slow connection. Skeleton? -->
+  <!-- TODO: Loading, what about location and next links? -->
   <div
     class="swiper min-h-[300px] w-full h-[50vh] bg-gray-100"
     style={{
