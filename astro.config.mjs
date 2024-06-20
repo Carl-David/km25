@@ -1,8 +1,14 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
+import compress from 'astro-compress';
 
 export default defineConfig({
-  integrations: [tailwind()],
+  integrations: [
+    tailwind(),
+    compress({
+      SVG: false,
+    }),
+  ],
   build: {
     inlineStylesheets: 'always',
   },
