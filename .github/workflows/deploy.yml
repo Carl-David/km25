@@ -13,6 +13,10 @@ jobs:
     steps:
       - name: Checkout repository using git
         uses: actions/checkout@v4
+      - name: Install sharp
+        shell: 'bash'
+        working-directory: .
+        run: yarn add sharp --ignore-engines
       - name: Install, build, and upload site
         uses: withastro/action@v2
   deploy:
