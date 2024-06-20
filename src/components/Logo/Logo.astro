@@ -50,7 +50,6 @@ import LogoSvg from './LogoSvg.astro';
   const logoFooter = document.querySelector('.logo-footer');
   const hero = document.querySelector('.swiper');
 
-  // TODO: Fix minimized delay
   const observer = new IntersectionObserver(
     ([entry]) => {
       logoInner?.classList.toggle('minimized', !entry.isIntersecting);
