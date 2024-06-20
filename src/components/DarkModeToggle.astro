@@ -20,7 +20,7 @@ import IconMoon from './icons/IconMoon.astro';
   <IconMoon class="toggle-light-mode text-white" />
 </a>
 
-<script>
+<script is:inline>
   let isDarkMode =
     localStorage.theme === 'dark' ||
     (!('theme' in localStorage) &&
@@ -32,7 +32,7 @@ import IconMoon from './icons/IconMoon.astro';
   toggleDarkMode?.classList.toggle('hidden', isDarkMode);
   toggleLightMode?.classList.toggle('hidden', !isDarkMode);
 
-  const updateDOM = (animates: boolean) => {
+  const updateDOM = (animates) => {
     isDarkMode = !isDarkMode;
     localStorage.theme = isDarkMode ? 'dark' : 'light';
     document.documentElement.classList.toggle('dark');
@@ -45,7 +45,7 @@ import IconMoon from './icons/IconMoon.astro';
     }
   };
 
-  const toggle = (e: MouseEvent | null) => {
+  const toggle = (e) => {
     e?.preventDefault();
 
     const shouldAnimate =
@@ -96,6 +96,6 @@ import IconMoon from './icons/IconMoon.astro';
     });
   };
 
-  toggleDarkMode?.addEventListener('click', (e) => toggle(e as MouseEvent));
-  toggleLightMode?.addEventListener('click', (e) => toggle(e as MouseEvent));
+  toggleDarkMode?.addEventListener('click', (e) => toggle(e));
+  toggleLightMode?.addEventListener('click', (e) => toggle(e));
 </script>
