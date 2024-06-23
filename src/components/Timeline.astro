@@ -1,27 +1,29 @@
 ---
 import Icon, { type Props as IconProps } from './Icon.astro';
-import companies from '../data/timeline.json';
+import entries from '../data/timeline.json';
 
-export type Company = {
+export type Entry = {
   name: string;
   url: string;
   year: string;
   tech?: IconProps[];
   description?: string;
   stickyName?: boolean;
+  logoPath?: string;
+  consultingCompany?: string;
 };
 
-const timelineStart = '2015';
+const timelineStart = '2011';
 ---
 
 <div class="relative mt-5 mx-auto sm:w-[600px] md:w-[90%]">
   <div class="flex flex-col">
     {
-      (companies as Company[]).map((company, index) => {
+      (entries as Entry[]).map((entry, index) => {
         return (
           <div class="relative dark:text-gray-300">
             <div class="flex relative flex-row justify-center mx-auto my-5 ">
-              <div class="timeline-year">{company.year}</div>
+              <div class="timeline-year">{entry.year}</div>
               <div
                 class="timeline timeline-horizontal absolute top-[18px] -z-10"
                 class:list={[
@@ -42,19 +44,23 @@ const timelineStart = '2015';
                 { 'sm:flex-row-reverse mx-5 sm:mx-0': index % 2 === 1 },
               ]}
             >
-              <div class="flex justify-center items-center shrink-0">
-                <a href={company.url} class="w-[140px] icon-link">
+              <div class="flex flex-col justify-center items-center shrink-0">
+                <a href={entry.url} class="w-[140px] icon-link">
                   <img
-                    src={`/images/companies/${company.name.toLowerCase().replace(/( )/g, '-')}.svg`}
+                    src={
+                      entry.logoPath
+                        ? entry.logoPath
+                        : `/images/companies/${entry.name.toLowerCase().replace(/( )/g, '-')}.svg`
+                    }
                     loading="lazy"
                     decoding="async"
-                    alt={company.name}
-                    class="mx-auto max-h-[75px]"
+                    alt={entry.name}
+                    class="mx-auto max-h-[100px]"
                   />
                 </a>
               </div>
               <div
-                class="timeline absolute top-[-39px] h-[calc(100%+80px)] w-[3px]"
+                class="timeline absolute top-[-41px] h-[calc(100%+80px)] w-[3px]"
                 class:list={[
                   {
                     '-left-5 sm:left-[calc(50%-115px)] md:left-[calc(50%-135px)]':
@@ -69,18 +75,21 @@ const timelineStart = '2015';
               <div class="flex flex-col grow">
                 <h3
                   class="text-lg mb-2 text-center sm:text-left"
-                  class:list={[
-                    { 'hidden sm:inline-block': !company.stickyName },
-                  ]}
+                  class:list={[{ 'hidden sm:inline-block': !entry.stickyName }]}
                 >
-                  {company.name}
+                  {entry.name}
                 </h3>
+                {entry.consultingCompany && (
+                  <p class="text-gray-500 dark:text-gray-300 text-sm mb-5 italic">
+                    Consultant at <span set:html={entry.consultingCompany} />
+                  </p>
+                )}
                 <p
                   class="text-gray-500 dark:text-gray-300 text-sm mb-5"
-                  set:html={company.description}
+                  set:html={entry.description}
                 />
                 <div class="grid grid-cols-4 sm:grid-cols-5 text-gray-500 dark:text-gray-300">
-                  {company.tech?.map((tech) => {
+                  {entry.tech?.map((tech) => {
                     return (
                       <Icon
                         {...tech}
@@ -92,7 +101,7 @@ const timelineStart = '2015';
                 </div>
               </div>
             </div>
-            {index === companies.length - 1 && (
+            {index === entries.length - 1 && (
               <div class="flex relative flex-row justify-center mx-auto my-5">
                 <div class="timeline-year">{timelineStart}</div>
                 <div

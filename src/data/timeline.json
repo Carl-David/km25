@@ -57,7 +57,8 @@
         "name": "Saab",
         "url": "https://www.saab.com",
         "year": "2020",
-        "description": "Full-Stack development within Surveillance (Public Safety & Security). Unfortunately I cannot disclose any details."
+        "description": "Full-Stack development within Surveillance (Public Safety & Security). Unfortunately I cannot disclose any technical details.",
+        "consultingCompany": "<a href=\"https://www.acorntechnology.se\">Acorn Technology</a>"
     },
     {
         "name": "Telia Company",
@@ -80,7 +81,8 @@
                 "type": "Docker"
             }
         ],
-        "description": "Building customer portals for both Arelion (formerly Telia Carrier) and Telia Wholesale (formerly Skanova)."
+        "description": "Building customer portals for both Arelion (formerly Telia Carrier) and Telia Wholesale (formerly Skanova).",
+        "consultingCompany": "<a href=\"https://www.acorntechnology.se\">Acorn Technology</a>"
     },
     {
         "name": "Qualisys",
@@ -109,7 +111,7 @@
                 "type": "MySQL"
             },
             {
-                "type": "Gulp"
+                "type": "Bash"
             },
             {
                 "type": "AWS"
@@ -119,5 +121,70 @@
             }
         ],
         "description": "Developing analysis modules and booking systems for motion capture in the sciences of running, gait and equine."
+    },
+    {
+        "name": "Career break – Two years in the saddle",
+        "url": "https://www.swedentoafrica.com",
+        "year": "2015",
+        "tech": [],
+        "description": "I spent two years <a href=\"https://www.swedentoafrica.com\">cycling</a> from Sweden all the way down to South Africa with many lessons learned along the way.",
+        "logoPath": "/images/sweden-to-africa.webp"
+    },
+    {
+        "name": "Nordea",
+        "url": "https://www.nordea.com",
+        "year": "2013",
+        "tech": [
+            {
+                "type": "JavaScript"
+            },
+            {
+                "type": "Sass"
+            }
+        ],
+        "description": "Initializing the work and creating a foundation for a new public bank website while sharing best practices with management.",
+        "consultingCompany": "<a href=\"https://www.capgemini.com\">Capgemini</a>"
+    },
+    {
+        "name": "E.ON",
+        "url": "https://www.eon.se",
+        "year": "2013",
+        "tech": [
+            {
+                "type": "JavaScript"
+            },
+            {
+                "type": "Backbone.js"
+            },
+            {
+                "type": "CSS"
+            }
+        ],
+        "description": "Short assignment helping out finishing a modern business portal to meet quality and time requirements.",
+        "consultingCompany": "<a href=\"https://www.capgemini.com\">Capgemini</a>"
+    },
+    {
+        "name": "SKF",
+        "url": "https://www.skf.com",
+        "year": "2013",
+        "tech": [
+            {
+                "type": "JavaScript"
+            },
+            {
+                "type": "jQuery"
+            },
+            {
+                "type": "CSS"
+            },
+            {
+                "type": "Java"
+            },
+            {
+                "type": "Akamai"
+            }
+        ],
+        "description": "Front-End lead and Java developer building a brand new global website on top of SDL Tridion CMS, launched in 60+ markets.",
+        "consultingCompany": "<a href=\"https://www.capgemini.com\">Capgemini</a>"
     }
 ]
