@@ -18,7 +18,7 @@ type Hero = {
   loaded?: boolean;
 };
 
-const heros: Hero[] = [
+const heroes: Hero[] = [
   {
     title: 'Altiplano, Bolivia. 4,523 masl.',
     image: altiplanoBolivia,
@@ -58,21 +58,13 @@ const heros: Hero[] = [
 ];
 ---
 
-<header class="relative w-full shrink-0 grow-0">
-  <!-- TODO: Dark mode swiper preloader -->
-  <!-- TODO: swiper-preloader-color and the preloader div needed? check slow connection. Skeleton? -->
-  <!-- TODO: Loading, what about location and next links? -->
-  <div
-    class="swiper min-h-[300px] w-full h-[50vh] bg-gray-100"
-    style={{
-      '--swiper-preloader-color': '#f3f3f3',
-    }}
-  >
+<header class="w-full shrink-0 grow-0">
+  <div class="swiper min-h-[300px] w-full h-[50vh] bg-gray-100">
     <div class="swiper-wrapper">
       {
-        heros.map((hero) => {
+        heroes.map((hero) => {
           return (
-            <div class="swiper-slide relative bg-gray-100">
+            <div class="swiper-slide">
               <Image
                 src={hero.image}
                 alt={hero.title}
@@ -80,7 +72,6 @@ const heros: Hero[] = [
                 class="absolute top-0 left-0 w-full h-full object-cover"
                 style={`object-position: ${hero.position ? hero.position : 'center'}`}
               />
-              <div class="swiper-lazy-preloader" />
               <div
                 class={`absolute max-lg:top-0 lg:bottom-0 right-0 m-2 md:m-3 p-1 bg-black bg-opacity-25 text-xs sm:text-sm font-mono text-gray-200 md:text-white z-10`}
               >
@@ -118,10 +109,6 @@ const heros: Hero[] = [
       />
     </a>
   </div>
-  <div
-    class="hero-skeleton bg-gray-100 dark:bg-gray-700 bg-gradient-to-l from-gray-100 from-0% via-gray-50 via-20% to-gray-100 to-40% dark:from-gray-700 dark:via-[#313646] dark:to-gray-700 w-full h-full hidden bg-no-repeat"
-  >
-  </div>
 </header>
 
 <style>
@@ -131,21 +118,8 @@ const heros: Hero[] = [
     }
   }
 
-  .hero-skeleton {
-    animation: 1s linear hero-skeleton-loading infinite;
-  }
-
   .swiper-slide-active img {
     animation: 60s linear hero-zoom infinite;
-  }
-
-  @keyframes hero-skeleton-loading {
-    0% {
-      transform: translateX(-200%);
-    }
-    100% {
-      transform: translateX(100%);
-    }
   }
 
   @keyframes hero-zoom {
