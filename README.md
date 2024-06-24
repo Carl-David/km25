@@ -1,3 +1,6 @@
-[![Logo](graphics/logo.svg)](https://www.km25.se)
-
-The website of my company KM25 AB ([www.km25.se](https://www.km25.se))
+<p align="center">
+  <a href="https://www.km25.se">
+    <img src="graphics/logo.svg" alt="Logo" width="300"/>
+  </a>
+  <p align="center">The website of my company KM25 AB (<a href="https://www.km25.se">www.km25.se</a>)</p>
+</p>
