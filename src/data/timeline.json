@@ -128,7 +128,8 @@
         "year": "2015",
         "tech": [],
         "description": "I spent two years <a href=\"https://www.swedentoafrica.com\">cycling</a> from Sweden all the way down to South Africa with many lessons learned along the way.",
-        "logoPath": "/images/sweden-to-africa.webp"
+        "logoPath": "/images/sweden-to-africa.webp",
+        "stickyName": true
     },
     {
         "name": "Nordea",
