@@ -1,8 +1,6 @@
 ---
 import Icon, { type Props as IconProps } from './Icon.astro';
 
-const year = new Date().getFullYear();
-
 const poweredBy: IconProps[] = [
   { type: 'Love' },
   { type: 'Astro' },
@@ -59,6 +57,11 @@ const poweredBy: IconProps[] = [
 
   <p class="mt-10">
     <span class="inline-block rotate-180" title="Copyleft ;-)">&copy;</span>
-    {year} KM25 AB
+    <span data-copyleft-year></span> KM25 AB
   </p>
 </footer>
+
+<script is:inline>
+  const copyleftYear = document.querySelector('[data-copyleft-year]');
+  copyleftYear.innerHTML = new Date().getFullYear();
+</script>
